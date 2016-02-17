@@ -17,14 +17,12 @@ import be.vdab.valueobjects.Bestelbonlijn;
 @RequestMapping("/bieren")
 public class BierController {
 	private static final String BIEREN_DETAIL_VIEW = "bieren/detail";
-	private static final String WINKELWAGEN_VIEW = "winkelwagen/overzicht";
+	private static final String REDIRECT_URL_NA_TOEVOEGEN = "redirect:/winkelmandje";
 	
-	private final BierService bierService;
 	private final Winkelmandje winkelmandje;
 
 	@Autowired
 	BierController( BierService bierService, Winkelmandje winkelmandje) {
-		this.bierService = bierService;
 		this.winkelmandje = winkelmandje;
 	}
 	
@@ -33,10 +31,10 @@ public class BierController {
 		return new ModelAndView(BIEREN_DETAIL_VIEW).addObject(bier);
 	}
 	
-	@RequestMapping(method = RequestMethod.POST)
-	ModelAndView post(@PathVariable Bier bier, HttpServletRequest request) {
+	@RequestMapping(path ="detail", method = RequestMethod.POST)
+	String post(@PathVariable Bier bier, HttpServletRequest request) {
 		Bestelbonlijn lijn = new Bestelbonlijn(bier,Integer.parseInt(request.getParameter("aantal")));
 		winkelmandje.addBestelbonlijnToBestelbon(lijn);
-		return new ModelAndView(BIEREN_DETAIL_VIEW).addObject(bier);
+		return REDIRECT_URL_NA_TOEVOEGEN;
 	}
 }
