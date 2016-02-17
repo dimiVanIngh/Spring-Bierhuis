@@ -11,5 +11,5 @@ public class BestelbonServiceImpl implements BestelbonService{
 	@Autowired
 	BestelbonServiceImpl(BestelbonDAO bestelbonDAO) {
 		this.bestelbonDAO = bestelbonDAO;
-	}
+	}	
 }
