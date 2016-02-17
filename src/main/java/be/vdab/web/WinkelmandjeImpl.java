@@ -17,7 +17,7 @@ class WinkelmandjeImpl implements Winkelmandje, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	public void getBestelbonId() {
+	public long getBestelbonId() {
 		return winkelmandjeId;
 	}
 

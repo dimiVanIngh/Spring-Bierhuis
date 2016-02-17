@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import be.vdab.entities.Bestelbon;
 import be.vdab.entities.Bier;
-import be.vdab.services.BierService;
+import be.vdab.services.BestelbonService;
 import be.vdab.valueobjects.Bestelbonlijn;
 
 @Controller
@@ -20,10 +21,12 @@ public class BierController {
 	private static final String REDIRECT_URL_NA_TOEVOEGEN = "redirect:/winkelmandje";
 	
 	private final Winkelmandje winkelmandje;
+	private final BestelbonService bestelbonService;
 
 	@Autowired
-	BierController( BierService bierService, Winkelmandje winkelmandje) {
+	BierController(BestelbonService bestelbonService, Winkelmandje winkelmandje) {
 		this.winkelmandje = winkelmandje;
+		this.bestelbonService = bestelbonService;
 	}
 	
 	@RequestMapping(path = "{bier}", method = RequestMethod.GET)
@@ -34,7 +37,9 @@ public class BierController {
 	@RequestMapping(path ="detail", method = RequestMethod.POST)
 	String post(@PathVariable Bier bier, HttpServletRequest request) {
 		Bestelbonlijn lijn = new Bestelbonlijn(bier,Integer.parseInt(request.getParameter("aantal")));
-		winkelmandje.addBestelbonlijnToBestelbon(lijn);
+		Bestelbon bon = bestelbonService.read(winkelmandje.getBestelbonId());
+		bon.addBestelLijn(lijn);
+		bestelbonService.update(bon);
 		return REDIRECT_URL_NA_TOEVOEGEN;
 	}
 }

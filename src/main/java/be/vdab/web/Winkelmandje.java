@@ -3,7 +3,7 @@ package be.vdab.web;
 import be.vdab.entities.Bestelbon;
 
 public interface Winkelmandje {
-	void getBestelbonId();
+	long getBestelbonId();
 	
 	void setBestelbonId(Bestelbon bestelbon);
 }
