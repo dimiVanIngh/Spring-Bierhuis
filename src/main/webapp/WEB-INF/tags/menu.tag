@@ -4,6 +4,6 @@
 	<ul>
 		<li><a href="<c:url value='/'/>">Welkom</a></li>
 		<li><a href="<c:url value='/brouwers'/>">Brouwers</a></li>
-		<li><a href="<c:url value='/winkelwagen'/>">Winkelwagen</a></li>
+		<li><a href="<c:url value='/winkelmandje'/>">Winkelwagen</a></li>
 	</ul>
 </nav>

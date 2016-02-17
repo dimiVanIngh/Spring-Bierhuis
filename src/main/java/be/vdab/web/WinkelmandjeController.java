@@ -15,13 +15,14 @@ import be.vdab.services.BrouwerService;
 @RequestMapping("/winkelmandje")
 public class WinkelmandjeController {
 	private static final String WINKELMANDJE_VIEW = "winkelmandje/overzicht";
-	
+
 	private final BestelbonService bestelbonService;
 	private final BrouwerService brouwerService;
 	private final Winkelmandje winkelmandje;
-	
+
 	@Autowired
-	WinkelmandjeController(BrouwerService brouwerService, Winkelmandje winkelmandje, BestelbonService bestelbonService) {
+	WinkelmandjeController(BrouwerService brouwerService, Winkelmandje winkelmandje,
+			BestelbonService bestelbonService) {
 		this.winkelmandje = winkelmandje;
 		this.brouwerService = brouwerService;
 		this.bestelbonService = bestelbonService;
@@ -30,6 +31,9 @@ public class WinkelmandjeController {
 	@RequestMapping(method = RequestMethod.GET)
 	ModelAndView get() {
 		Bestelbon mandje = bestelbonService.read(winkelmandje.getBestelbonId());
-		return new ModelAndView(WINKELMANDJE_VIEW).addObject(mandje);
+		ModelAndView modelAndView = new ModelAndView(WINKELMANDJE_VIEW);
+		if (mandje != null)
+			modelAndView.addObject(mandje);
+		return modelAndView;
 	}
 }
