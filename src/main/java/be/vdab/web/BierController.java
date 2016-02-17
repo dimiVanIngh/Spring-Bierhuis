@@ -34,7 +34,7 @@ public class BierController {
 		return new ModelAndView(BIEREN_DETAIL_VIEW).addObject(bier);
 	}
 	
-	@RequestMapping(path ="detail", method = RequestMethod.POST)
+	@RequestMapping(path = "${bier}", method = RequestMethod.POST)
 	String post(@PathVariable Bier bier, HttpServletRequest request) {
 		Bestelbonlijn lijn = new Bestelbonlijn(bier,Integer.parseInt(request.getParameter("aantal")));
 		Bestelbon bon = bestelbonService.read(winkelmandje.getBestelbonId());

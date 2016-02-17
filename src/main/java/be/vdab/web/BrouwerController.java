@@ -31,9 +31,6 @@ class BrouwerController {
 	
 	@RequestMapping(path = "{brouwer}", method = RequestMethod.GET)
 	ModelAndView read(@PathVariable Brouwer brouwer) {
-		for(Bier bier : brouwer.getBieren()){
-			System.out.println(bier.getAlcohol());
-		}
 		return new ModelAndView(BIEREN_VIEW).addObject(brouwer);
 	}
 }

@@ -22,11 +22,11 @@
 					<th>Te betalen</th>
 				</tr>
 			</thead>
-			<c:forEach var="lijn" items="${reservatie.bestelbonlijnen}">
+			<c:forEach var="lijn" items="${mandje.bestelbonlijnen}">
 				<tr>
-					<td>${lijn.getVolledigeNaam()}</td>
+					<td>${lijn.bier.naam}</td>
 					<td><fmt:formatNumber type="currency"
-							value="${lijn.wijn.prijs}" /></td>
+							value="${lijn.bier.prijs}" /></td>
 					<td><c:out value='${lijn.aantal}' /></td>
 					<td><fmt:formatNumber type="currency"
 							value="${lijn.getTotaleprijs()}" /></td>
@@ -35,7 +35,7 @@
 			<tr>
 				<td colspan="3">Te betalen:</td>
 				<td><fmt:formatNumber type="currency"
-						value="${reservatie.getTotalePrijs()}" /></td>
+						value="${mandje.getTotalePrijs()}" /></td>
 			</tr>
 		</table>
 
@@ -52,22 +52,6 @@
 			<label>Gemeente <span>${fouten.gemeente}</span> 
 				<input name='gemeente' value='${param.gemeente}' required></label>
 
-			<div>
-			<p>Bestelwijze
-			<c:if test="${not empty fouten.bestelwijze}">
-				<span class="error">
-					 ${fouten.bestelwijze}
-				</span>
-			</c:if>
-			</p>
-				<label> <input type='radio' name='bestelwijze'
-					value='AFHALEN' ${param.bestelwijze=='AFHALEN' ? 'checked' : ''}>Afhalen
-				</label>
-			</div>
-			<div>
-				<label><input type='radio' name='bestelwijze'
-					value='OPSTUREN' ${param.bestelwijze=='OPSTUREN' ? 'checked' : ''}>Opsturen</label>
-			</div>
 			<input type='submit' value='Als bestelbon bevestigen'
 				id='bevestigknop'>
 		</form>
