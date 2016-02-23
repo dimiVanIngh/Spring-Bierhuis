@@ -10,8 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
-
-import org.hibernate.validator.constraints.SafeHtml;
+import javax.validation.constraints.NotNull;
 
 import be.vdab.entities.Bier;
 
@@ -19,6 +18,8 @@ import be.vdab.entities.Bier;
 public class Bestelbonlijn implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@Valid
+	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE, optional = false)
 	@JoinColumn(name = "bierid")
 	private Bier bier;

@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import be.vdab.entities.Bestelbon;
 import be.vdab.entities.Bier;
 import be.vdab.services.BestelbonService;
+import be.vdab.valueobjects.Adres;
 import be.vdab.valueobjects.Bestelbonlijn;
 
 @Controller
@@ -37,8 +38,8 @@ public class BierController {
 		return new ModelAndView(BIEREN_DETAIL_VIEW).addObject(bier).addObject("bestelbonlijn", new Bestelbonlijn(bier));
 	}
 	
-	@RequestMapping(path ="${bier}", method = RequestMethod.POST)
-	String post(@Valid Bestelbonlijn bestelbonlijn,BindingResult bindingResult) {
+	@RequestMapping(path = "${bier}", method = RequestMethod.POST)
+	String post(@PathVariable Bier bier, @Valid Bestelbonlijn bestelbonlijn,BindingResult bindingResult) {
 		//TODO check > 0 + check mandje id != 0	
 		/*if (bindingResult.hasErrors()) {
 			return BIEREN_DETAIL_VIEW;
@@ -51,14 +52,16 @@ public class BierController {
 		return REDIRECT_URL_NA_TOEVOEGEN;
 	}
 	
+	//TODO mandje id = 0 -> create  != 0 read; probs : bier null, can't read pathvar -- no solution found , just store in session
 	@RequestMapping(method = RequestMethod.POST)
 	String postNoPath(@Valid Bestelbonlijn bestelbonlijn,BindingResult bindingResult) {
+		System.out.println(bestelbonlijn.getAantal());
+		System.out.println(bestelbonlijn.getBier().getNaam());
 		if (bindingResult.hasErrors()) {
 			return BIEREN_DETAIL_VIEW;
 		}
-		//TODO mandje id = 0 -> create  != 0 read;
 		if(winkelmandje.getBestelbonId() == 0){
-			Bestelbon bon = new Bestelbon("placeholder",);
+			Bestelbon bon = new Bestelbon("placeholder",new Adres("placeholder","61",3010,"Leuven"));
 			bon.addBestelLijn(bestelbonlijn);
 			bestelbonService.create(bon);
 		} else {

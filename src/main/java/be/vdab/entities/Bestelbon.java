@@ -43,6 +43,10 @@ public class Bestelbon implements Serializable{
 	@ElementCollection
 	@CollectionTable(name = "bestelbonlijnen", joinColumns = @JoinColumn(name = "bestelbonid") )
 	private Set<Bestelbonlijn> bestelbonlijnen;
+
+	public Bestelbon() {
+		bestelbonlijnen = new HashSet<Bestelbonlijn>();
+	}
 	
 	public Bestelbon(String naam, Adres adres, Set<Bestelbonlijn> bestelbonlijnen){
 		this(naam,adres);
@@ -50,7 +54,7 @@ public class Bestelbon implements Serializable{
 	}
 	
 	public Bestelbon(String naam, Adres adres){
-		bestelbonlijnen = new HashSet<Bestelbonlijn>();
+		this();
 		this.naam = naam;
 		this.adres = adres;
 	}
