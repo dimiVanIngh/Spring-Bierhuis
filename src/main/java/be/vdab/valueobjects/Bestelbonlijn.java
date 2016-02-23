@@ -8,6 +8,8 @@ import javax.persistence.Embeddable;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
 
 import org.hibernate.validator.constraints.SafeHtml;
 
@@ -21,7 +23,7 @@ public class Bestelbonlijn implements Serializable {
 	@JoinColumn(name = "bierid")
 	private Bier bier;
 	
-	@SafeHtml
+	@Min(1)
 	private int aantal;
 
 	public Bier getBier() {

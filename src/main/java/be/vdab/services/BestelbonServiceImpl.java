@@ -20,7 +20,14 @@ public class BestelbonServiceImpl implements BestelbonService{
 	}
 
 	@Override
+	@ModifyingTransactionalServiceMethod
 	public void update(Bestelbon bon) {
+		bestelbonDAO.save(bon);	
+	}
+
+	@Override
+	@ModifyingTransactionalServiceMethod
+	public void create(Bestelbon bon) {
 		bestelbonDAO.save(bon);	
 	}
 }

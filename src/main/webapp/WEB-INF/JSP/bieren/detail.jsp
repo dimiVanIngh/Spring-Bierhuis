@@ -4,6 +4,7 @@
 <%@taglib prefix='spring' uri='http://www.springframework.org/tags'%>
 <%@taglib prefix='fmt' uri='http://java.sun.com/jsp/jstl/fmt'%>
 <%@taglib prefix='v' uri='http://vdab.be/tags'%>
+<%@taglib prefix='form' uri='http://www.springframework.org/tags/form'%>
 <!doctype html>
 <html lang='nl'>
 <head>
@@ -24,10 +25,11 @@
 		<dt>Brouwer</dt>
 		<dd>${bier.brouwer.naam}</dd>
 	</dl>
-	<form method="post" id="reserveerForm">
-		<label>Aantal (Bakken)<span>${fouten.aantal}</span> 
-		<input name="aantal" type="number" min="1" step="1" autofocus required> </label> 
-		<input name="idBier" type="hidden" value="${bier.id}" /> 
+	<c:url value='/bieren' var='url' />
+	<form:form method="post" commandName="bestelbonlijn" action='${url}'>
+		<form:label path='aantal'>Aantal (bakken):<form:errors path='aantal' /></form:label>
+		<form:input path='aantal' type="number" min="1" step="1" autofocus="autofocus" required="required" />
 		<input type="submit" value="Toevoegen" id="reserveerKnop">
-	</form>
+	</form:form>
 </html>
+

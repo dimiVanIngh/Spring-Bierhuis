@@ -20,10 +20,6 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
-import org.springframework.stereotype.Component;
-import org.springframework.web.context.WebApplicationContext;
 
 import be.vdab.valueobjects.Adres;
 import be.vdab.valueobjects.Bestelbonlijn;
@@ -47,15 +43,16 @@ public class Bestelbon implements Serializable{
 	@ElementCollection
 	@CollectionTable(name = "bestelbonlijnen", joinColumns = @JoinColumn(name = "bestelbonid") )
 	private Set<Bestelbonlijn> bestelbonlijnen;
-
-	public Bestelbon() {
-		bestelbonlijnen = new HashSet<Bestelbonlijn>();
-	}
 	
 	public Bestelbon(String naam, Adres adres, Set<Bestelbonlijn> bestelbonlijnen){
+		this(naam,adres);
+		this.bestelbonlijnen = bestelbonlijnen;
+	}
+	
+	public Bestelbon(String naam, Adres adres){
+		bestelbonlijnen = new HashSet<Bestelbonlijn>();
 		this.naam = naam;
 		this.adres = adres;
-		this.bestelbonlijnen = bestelbonlijnen;
 	}
 
 	public long getId() {

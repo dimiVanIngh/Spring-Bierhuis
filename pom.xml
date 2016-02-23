@@ -84,6 +84,16 @@
 			<artifactId>HikariCP</artifactId>
 			<version>[2.4.0,]</version>
 		</dependency>
+		<dependency><!-- SPRING SECURITY -->
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>4.0.3.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+			<version>4.0.3.RELEASE</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>

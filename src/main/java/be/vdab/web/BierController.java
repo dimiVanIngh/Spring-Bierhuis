@@ -1,9 +1,12 @@
 package be.vdab.web;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,15 +34,43 @@ public class BierController {
 	
 	@RequestMapping(path = "{bier}", method = RequestMethod.GET)
 	ModelAndView read(@PathVariable Bier bier) {
-		return new ModelAndView(BIEREN_DETAIL_VIEW).addObject(bier);
+		return new ModelAndView(BIEREN_DETAIL_VIEW).addObject(bier).addObject("bestelbonlijn", new Bestelbonlijn(bier));
 	}
 	
-	@RequestMapping(path = "${bier}", method = RequestMethod.POST)
-	String post(@PathVariable Bier bier, HttpServletRequest request) {
+	@RequestMapping(path ="${bier}", method = RequestMethod.POST)
+	String post(@Valid Bestelbonlijn bestelbonlijn,BindingResult bindingResult) {
+		//TODO check > 0 + check mandje id != 0	
+		/*if (bindingResult.hasErrors()) {
+			return BIEREN_DETAIL_VIEW;
+		}
 		Bestelbonlijn lijn = new Bestelbonlijn(bier,Integer.parseInt(request.getParameter("aantal")));
 		Bestelbon bon = bestelbonService.read(winkelmandje.getBestelbonId());
 		bon.addBestelLijn(lijn);
-		bestelbonService.update(bon);
+		bestelbonService.update(bon);*/
+		System.out.println("check");
 		return REDIRECT_URL_NA_TOEVOEGEN;
+	}
+	
+	@RequestMapping(method = RequestMethod.POST)
+	String postNoPath(@Valid Bestelbonlijn bestelbonlijn,BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return BIEREN_DETAIL_VIEW;
+		}
+		//TODO mandje id = 0 -> create  != 0 read;
+		if(winkelmandje.getBestelbonId() == 0){
+			Bestelbon bon = new Bestelbon("placeholder",);
+			bon.addBestelLijn(bestelbonlijn);
+			bestelbonService.create(bon);
+		} else {
+			Bestelbon bon = bestelbonService.read(winkelmandje.getBestelbonId());
+			bon.addBestelLijn(bestelbonlijn);
+			bestelbonService.update(bon);
+		}
+		return REDIRECT_URL_NA_TOEVOEGEN;
+	}
+	
+	@InitBinder("bestelbonlijn")
+	void initBinderBestelbonlijn(WebDataBinder binder) {
+		binder.initDirectFieldAccess();
 	}
 }
