@@ -26,6 +26,9 @@ class WinkelmandjeImpl implements Winkelmandje, Serializable {
 		this.bestelbonId = bestelbon.getId();
 		
 	}
-
-
+	@Override
+	public void setBestelbonId(long id) {
+		this.bestelbonId = id;
+		
+	}
 }

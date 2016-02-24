@@ -5,6 +5,8 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,10 +36,11 @@ public class WinkelmandjeController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	ModelAndView get() {
-		Bestelbon mandje = bestelbonService.read(winkelmandje.getBestelbonId());
+		Bestelbon bestelbon = bestelbonService.read(winkelmandje.getBestelbonId());
 		ModelAndView modelAndView = new ModelAndView(WINKELMANDJE_VIEW);
-		if (mandje != null)
-			modelAndView.addObject("mandje", mandje);
+		if (bestelbon != null){
+			modelAndView.addObject("bestelbon",bestelbon);
+		}
 		return modelAndView;
 	}
 
@@ -52,6 +55,12 @@ public class WinkelmandjeController {
 			return WINKELMANDJE_VIEW;
 		}
 		bestelbonService.update(bestelbon);
+		winkelmandje.setBestelbonId(0);
 		return REDIRECT_NA_CONFIRM_VIEW;
+	}
+	
+	@InitBinder("bestelbon")
+	void initBinderBestelbon(WebDataBinder binder) {
+		binder.initDirectFieldAccess();
 	}
 }

@@ -36,11 +36,7 @@ public class BierController {
 	
 	@RequestMapping(path = "{bier}", method = RequestMethod.GET)
 	ModelAndView read(@PathVariable Bier bier) {
-		ModelAndView modelAndView = new ModelAndView(BIEREN_DETAIL_VIEW);
-		if(bier != null){
-			modelAndView.addObject(new Bestelbonlijn(bier));
-		}
-		return modelAndView;
+		return new ModelAndView(BIEREN_DETAIL_VIEW).addObject(new Bestelbonlijn(bier));
 	}
 	
 	@RequestMapping(path = "{bier}", method = RequestMethod.POST)

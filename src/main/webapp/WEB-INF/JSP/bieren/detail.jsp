@@ -12,23 +12,33 @@
 </head>
 <body>
 	<v:menu />
-	<h1>${bier.naam}</h1>
-	<dl>
-		<dt>Alcohol</dt>
-		<dd>${bier.alcohol}&#37;</dd>
-		<dt>Prijs</dt>
-		<dd>
-			<fmt:formatNumber type="currency" value="${bier.prijs}" />
-		</dd>
-		<dt>Soort</dt>
-		<dd>${bier.soort.naam}</dd>
-		<dt>Brouwer</dt>
-		<dd>${bier.brouwer.naam}</dd>
-	</dl>
-	<form:form method="post" commandName="bestelbonlijn">
-		<form:label path='aantal'>Aantal (bakken):<form:errors path='aantal' /></form:label>
-		<form:input path='aantal' type="number" min="1" step="1" autofocus="autofocus" required="required" />
-		<input type="submit" value="Toevoegen" id="reserveerKnop">
-	</form:form>
+	<c:choose>
+		<c:when test="${not empty bier}">
+			<h1>${bier.naam}</h1>
+			<dl>
+				<dt>Alcohol</dt>
+				<dd>${bier.alcohol}&#37;</dd>
+				<dt>Prijs</dt>
+				<dd>
+					<fmt:formatNumber type="currency" value="${bier.prijs}" />
+				</dd>
+				<dt>Soort</dt>
+				<dd>${bier.soort.naam}</dd>
+				<dt>Brouwer</dt>
+				<dd>${bier.brouwer.naam}</dd>
+			</dl>
+			<form:form method="post" commandName="bestelbonlijn">
+				<form:label path='aantal'>Aantal (bakken):<form:errors
+						path='aantal' delimiter=", "/>
+				</form:label>
+				<form:input path='aantal' type="number" min="1" step="1"
+					autofocus="autofocus" required="required" />
+				<input type="submit" value="Toevoegen" id="reserveerKnop">
+			</form:form>
+		</c:when>
+		<c:otherwise>
+			// Mooie rode error
+		</c:otherwise>
+	</c:choose>
 </html>
 

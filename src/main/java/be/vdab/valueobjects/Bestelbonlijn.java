@@ -17,6 +17,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import be.vdab.entities.Bier;
 
 @Embeddable
+// TODO int -> Integer allows @NotBlank, doesn't force int; should implement custom error messages
 public class Bestelbonlijn implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -27,7 +28,8 @@ public class Bestelbonlijn implements Serializable {
 	private Bier bier;
 	
 	@Min(1)
-	private int aantal;
+	@NotNull
+	private Integer aantal;
 
 	public Bier getBier() {
 		return bier;
@@ -37,7 +39,7 @@ public class Bestelbonlijn implements Serializable {
 		return aantal;
 	}
 
-	public Bestelbonlijn(Bier bier, int aantal) {
+	public Bestelbonlijn(Bier bier, Integer aantal) {
 		this.bier = bier;
 		this.aantal = aantal;
 	}

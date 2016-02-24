@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
@@ -32,8 +33,8 @@ public class Bestelbon implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	
 	@Valid
-	@NotNull
 	@Embedded
 	private Adres adres;
 	@SafeHtml
@@ -45,7 +46,7 @@ public class Bestelbon implements Serializable{
 	private Set<Bestelbonlijn> bestelbonlijnen;
 
 	public Bestelbon() {
-		bestelbonlijnen = new HashSet<Bestelbonlijn>();
+
 	}
 	
 	public Bestelbon(String naam, Adres adres, Set<Bestelbonlijn> bestelbonlijnen){
@@ -54,9 +55,13 @@ public class Bestelbon implements Serializable{
 	}
 	
 	public Bestelbon(String naam, Adres adres){
-		this();
 		this.naam = naam;
 		this.adres = adres;
+	}
+	
+	public Bestelbon(long id, Adres adres, String naam, Set<Bestelbonlijn> bestelbonlijnen) {
+		this(naam,adres,bestelbonlijnen);
+		this.id = id;
 	}
 
 	public long getId() {
