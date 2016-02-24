@@ -33,7 +33,7 @@ public class WinkelmandjeController {
 		Bestelbon mandje = bestelbonService.read(winkelmandje.getBestelbonId());
 		ModelAndView modelAndView = new ModelAndView(WINKELMANDJE_VIEW);
 		if (mandje != null)
-			modelAndView.addObject(mandje);
+			modelAndView.addObject("mandje", mandje);
 		return modelAndView;
 	}
 }
