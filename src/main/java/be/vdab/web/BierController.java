@@ -45,7 +45,8 @@ public class BierController {
 			return BIEREN_DETAIL_VIEW;
 		}
 		if(winkelmandje.getBestelbonId() == 0){
-			Bestelbon bon = new Bestelbon("placeholder",new Adres("placeholder","61",3010,"Leuven"));
+			Bestelbon bon = new Bestelbon("naam",new Adres("straat","61",3010,"Leuven"));
+			System.out.println(bon.getNaam());
 			bon.addBestelLijn(bestelbonlijn);
 			bestelbonService.create(bon);
 			winkelmandje.setBestelbonId(bon);

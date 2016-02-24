@@ -46,7 +46,9 @@ public class WinkelmandjeController {
 
 	@RequestMapping(path = "confirm", method = RequestMethod.GET)
 	ModelAndView confirm() {
-		return new ModelAndView(CONFIRM_VIEW).addObject(winkelmandje);
+		long orderNr = winkelmandje.getBestelbonId();
+		winkelmandje.setBestelbonId(0);
+		return new ModelAndView(CONFIRM_VIEW).addObject("orderNr", orderNr);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
@@ -54,8 +56,7 @@ public class WinkelmandjeController {
 		if (bindingResult.hasErrors()) {
 			return WINKELMANDJE_VIEW;
 		}
-		bestelbonService.update(bestelbon);
-		winkelmandje.setBestelbonId(0);
+		bestelbonService.update(bestelbon);	
 		return REDIRECT_NA_CONFIRM_VIEW;
 	}
 	

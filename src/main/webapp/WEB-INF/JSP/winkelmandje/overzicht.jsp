@@ -10,9 +10,10 @@
 </head>
 <body>
 <v:menu />
-	<h2>Winkelwagen</h2>
 
-	<c:if test="${not empty bestelbon}">
+	<c:choose>
+	<c:when test="${not empty bestelbon}">
+		<h2>Winkelwagen</h2>
 		<table>
 			<thead>
 				<tr>
@@ -58,6 +59,10 @@
 				document.getElementById('bevestigknop').disabled = true;
 			};
 		</script>
-	</c:if>
+	</c:when>
+	<c:otherwise>
+		<p><a href="<c:url value='/brouwers'/>">Niets in je mandje, go shopping </a></p>
+	</c:otherwise>
+	</c:choose>
 </body>
 </html>

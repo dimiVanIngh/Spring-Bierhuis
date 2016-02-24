@@ -11,8 +11,8 @@
 <v:menu />
 <body>
 	<c:choose>
-		<c:when test="${winkelmandje.bestelbonId != 0}">
-			<h2>Je mandje is bevestigd als bestelbon ${winkelmandje.bestelbonId}</h2>
+		<c:when test="${orderNr != 0}">
+			<h2>Je mandje is bevestigd als bestelbon ${orderNr}</h2>
 		</c:when>
 	</c:choose>
 </body>
