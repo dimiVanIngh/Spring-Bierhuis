@@ -51,9 +51,11 @@ public class WinkelmandjeController {
 		return new ModelAndView(CONFIRM_VIEW).addObject("orderNr", orderNr);
 	}
 
+	//TODO bestellijnen not readable reset after error ; postcode constraint andere message
 	@RequestMapping(method = RequestMethod.POST)
 	String post(@Valid Bestelbon bestelbon, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
+			System.out.println(bestelbon.getId());
 			return WINKELMANDJE_VIEW;
 		}
 		bestelbonService.update(bestelbon);	

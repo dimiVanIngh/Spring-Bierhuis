@@ -58,7 +58,7 @@ public class Bestelbon implements Serializable{
 		this.naam = naam;
 		this.adres = adres;
 	}
-	
+		
 	public Bestelbon(long id, Adres adres, String naam, Set<Bestelbonlijn> bestelbonlijnen) {
 		this(naam,adres,bestelbonlijnen);
 		this.id = id;
