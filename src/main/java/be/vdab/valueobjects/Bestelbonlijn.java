@@ -17,7 +17,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import be.vdab.entities.Bier;
 
 @Embeddable
-// TODO int -> Integer allows @NotBlank, doesn't force int; should implement custom error messages
+// TODO int -> Integer allows @NotBlank, doesn't force int; should implement custom error messages now can't parseto Int
 public class Bestelbonlijn implements Serializable {
 	private static final long serialVersionUID = 1L;
 

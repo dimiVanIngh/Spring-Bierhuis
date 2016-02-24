@@ -7,16 +7,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import be.vdab.entities.Bestelbon;
 import be.vdab.services.BestelbonService;
-import be.vdab.services.BrouwerService;
-import be.vdab.valueobjects.Adres;
-import be.vdab.valueobjects.Bestelbonlijn;
 
 @Controller
 @RequestMapping("/winkelmandje")
@@ -24,6 +20,7 @@ public class WinkelmandjeController {
 	private static final String WINKELMANDJE_VIEW = "winkelmandje/overzicht";
 	private static final String CONFIRM_VIEW = "winkelmandje/confirmed";
 	private static final String REDIRECT_NA_CONFIRM_VIEW = "redirect:/winkelmandje/confirm";
+	private static final String REDIRECT_NA_FOUTEN_BESTELBON = "redirect:/winkelmandje";
 
 	private final BestelbonService bestelbonService;
 	private final Winkelmandje winkelmandje;
@@ -37,32 +34,42 @@ public class WinkelmandjeController {
 	@RequestMapping(method = RequestMethod.GET)
 	ModelAndView get() {
 		Bestelbon bestelbon = bestelbonService.read(winkelmandje.getBestelbonId());
+		WinkelmandjeForm winkelmandjeForm = new WinkelmandjeForm();
 		ModelAndView modelAndView = new ModelAndView(WINKELMANDJE_VIEW);
 		if (bestelbon != null){
-			modelAndView.addObject("bestelbon",bestelbon);
+			winkelmandjeForm.setBestelbonlijnen(bestelbon.getBestelbonlijnen());
+			modelAndView.addObject("bestelbon", bestelbon).addObject("winkelmandjeForm", winkelmandjeForm);
 		}
 		return modelAndView;
 	}
-
-	@RequestMapping(path = "confirm", method = RequestMethod.GET)
-	ModelAndView confirm() {
+	
+	//TODO rethink code + rewrite
+	ModelAndView get(WinkelmandjeForm otherForm) {
+		Bestelbon bestelbon = bestelbonService.read(winkelmandje.getBestelbonId());
+		WinkelmandjeForm winkelmandjeForm = otherForm;
+		ModelAndView modelAndView = new ModelAndView(WINKELMANDJE_VIEW);
+		if (bestelbon != null){
+			winkelmandjeForm.setBestelbonlijnen(bestelbon.getBestelbonlijnen());
+			modelAndView.addObject("bestelbon", bestelbon).addObject("winkelmandjeForm", winkelmandjeForm);
+		}
+		return modelAndView;
+	}
+	
+	@RequestMapping(method = RequestMethod.POST)
+	ModelAndView post(@Valid WinkelmandjeForm winkelmandjeForm, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return get(winkelmandjeForm);
+		}
+		Bestelbon bestelbon = bestelbonService.read(winkelmandje.getBestelbonId());
+		bestelbon.setNaam(winkelmandjeForm.getNaam());
+		bestelbon.setAdres(winkelmandjeForm.getAdres());
+		bestelbonService.update(bestelbon);	
 		long orderNr = winkelmandje.getBestelbonId();
 		winkelmandje.setBestelbonId(0);
 		return new ModelAndView(CONFIRM_VIEW).addObject("orderNr", orderNr);
 	}
-
-	//TODO bestellijnen not readable reset after error ; postcode constraint andere message
-	@RequestMapping(method = RequestMethod.POST)
-	String post(@Valid Bestelbon bestelbon, BindingResult bindingResult) {
-		if (bindingResult.hasErrors()) {
-			System.out.println(bestelbon.getId());
-			return WINKELMANDJE_VIEW;
-		}
-		bestelbonService.update(bestelbon);	
-		return REDIRECT_NA_CONFIRM_VIEW;
-	}
 	
-	@InitBinder("bestelbon")
+	@InitBinder("winkelmandjeForm")
 	void initBinderBestelbon(WebDataBinder binder) {
 		binder.initDirectFieldAccess();
 	}
