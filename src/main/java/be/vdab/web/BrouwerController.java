@@ -30,6 +30,10 @@ class BrouwerController {
 	
 	@RequestMapping(path = "{brouwer}", method = RequestMethod.GET)
 	ModelAndView read(@PathVariable Brouwer brouwer) {
-		return new ModelAndView(BIEREN_VIEW).addObject(brouwer);
+		ModelAndView modelAndView = new ModelAndView(BIEREN_VIEW);
+		if(brouwer != null){
+			modelAndView.addObject(brouwer);
+		}
+		return modelAndView;
 	}
 }

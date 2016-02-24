@@ -1,7 +1,10 @@
 package be.vdab.web;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -10,21 +13,22 @@ import org.springframework.web.servlet.ModelAndView;
 import be.vdab.entities.Bestelbon;
 import be.vdab.services.BestelbonService;
 import be.vdab.services.BrouwerService;
+import be.vdab.valueobjects.Adres;
+import be.vdab.valueobjects.Bestelbonlijn;
 
 @Controller
 @RequestMapping("/winkelmandje")
 public class WinkelmandjeController {
 	private static final String WINKELMANDJE_VIEW = "winkelmandje/overzicht";
+	private static final String CONFIRM_VIEW = "winkelmandje/confirmed";
+	private static final String REDIRECT_NA_CONFIRM_VIEW = "redirect:/winkelmandje/confirm";
 
 	private final BestelbonService bestelbonService;
-	private final BrouwerService brouwerService;
 	private final Winkelmandje winkelmandje;
 
 	@Autowired
-	WinkelmandjeController(BrouwerService brouwerService, Winkelmandje winkelmandje,
-			BestelbonService bestelbonService) {
+	WinkelmandjeController(Winkelmandje winkelmandje, BestelbonService bestelbonService) {
 		this.winkelmandje = winkelmandje;
-		this.brouwerService = brouwerService;
 		this.bestelbonService = bestelbonService;
 	}
 
@@ -35,5 +39,19 @@ public class WinkelmandjeController {
 		if (mandje != null)
 			modelAndView.addObject("mandje", mandje);
 		return modelAndView;
+	}
+
+	@RequestMapping(path = "confirm", method = RequestMethod.GET)
+	ModelAndView confirm() {
+		return new ModelAndView(CONFIRM_VIEW).addObject(winkelmandje);
+	}
+
+	@RequestMapping(method = RequestMethod.POST)
+	String post(@Valid Bestelbon bestelbon, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return WINKELMANDJE_VIEW;
+		}
+		bestelbonService.update(bestelbon);
+		return REDIRECT_NA_CONFIRM_VIEW;
 	}
 }

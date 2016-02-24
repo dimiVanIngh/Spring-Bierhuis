@@ -54,12 +54,13 @@ public class Bestelbonlijn implements Serializable {
 		return bier.getPrijs().multiply(BigDecimal.valueOf(aantal));
 	}
 
-	//TODO
-	/*
 	@Override
 	public int hashCode() {
-		return getVolledigeNaam().hashCode();
-	} 
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((bier == null) ? 0 : bier.hashCode());
+		return result;
+	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -70,6 +71,12 @@ public class Bestelbonlijn implements Serializable {
 		if (!(obj instanceof Bestelbonlijn))
 			return false;
 		Bestelbonlijn other = (Bestelbonlijn) obj;
-		return other.getVolledigeNaam().equals(getVolledigeNaam());
-	}*/
+		if (bier == null) {
+			if (other.bier != null)
+				return false;
+		} else if (!bier.equals(other.bier))
+			return false;
+		return true;
+	}
+
 }

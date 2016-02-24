@@ -12,18 +12,18 @@ import be.vdab.entities.Bestelbon;
 @Component
 @Scope(scopeName = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.INTERFACES)
 class WinkelmandjeImpl implements Winkelmandje, Serializable {
-	private long winkelmandjeId;
+	private long bestelbonId;
 	
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	public long getBestelbonId() {
-		return winkelmandjeId;
+		return bestelbonId;
 	}
 
 	@Override
 	public void setBestelbonId(Bestelbon bestelbon) {
-		this.winkelmandjeId = bestelbon.getId();
+		this.bestelbonId = bestelbon.getId();
 		
 	}
 

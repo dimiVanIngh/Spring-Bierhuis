@@ -8,7 +8,7 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 import be.vdab.dao.CreateDAOBeans;
 import be.vdab.datasource.CreateDataSourceBean;
 import be.vdab.services.CreateServiceBeans;
-
+//TODO apart jsp invulform ; resourcebundle for all text ; alle controllers met pathvar checken op null
 public class Initializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 	@Override
 	protected String[] getServletMappings() {
