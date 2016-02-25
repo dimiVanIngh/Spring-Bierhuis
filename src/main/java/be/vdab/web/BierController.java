@@ -44,10 +44,9 @@ public class BierController {
 		if (bindingResult.hasErrors() || bier == null) {
 			return BIEREN_DETAIL_VIEW;
 		}
-		//TODO empty adres, create needs valid adres
+		//TODO placeholder adres, create needs valid adres
 		if(winkelmandje.getBestelbonId() == 0){
-			Bestelbon bon = new Bestelbon("naam",new Adres("straat","61",3010,"Leuven"));
-			System.out.println(bon.getNaam());
+			Bestelbon bon = new Bestelbon("placeholder",new Adres("placeholder","61",3010,"Leuven"));
 			bon.addBestelLijn(bestelbonlijn);
 			bestelbonService.create(bon);
 			winkelmandje.setBestelbonId(bon);

@@ -4,6 +4,9 @@ import javax.servlet.Filter;
 import javax.servlet.ServletRegistration.Dynamic;
 
 import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import be.vdab.dao.CreateDAOBeans;
@@ -28,11 +31,19 @@ public class Initializer extends AbstractAnnotationConfigDispatcherServletInitia
 	
 	@Override
 	protected Filter[] getServletFilters() {
-		return new Filter[] { new OpenEntityManagerInViewFilter() };
+		CharacterEncodingFilter utf8Filter = new CharacterEncodingFilter();
+	    utf8Filter.setEncoding("UTF-8");
+		return new Filter[] { new OpenEntityManagerInViewFilter(), utf8Filter };
 	}
 	
 	@Override
 	protected void customizeRegistration(Dynamic registration) {
 		registration.setInitParameter("dispatchOptionsRequest", "true");
 	}
+	@Override
+    protected DispatcherServlet createDispatcherServlet(WebApplicationContext servletAppContext) {
+        DispatcherServlet ds = new DispatcherServlet(servletAppContext);
+        ds.setThrowExceptionIfNoHandlerFound(true);
+        return ds;
+    }
 }
