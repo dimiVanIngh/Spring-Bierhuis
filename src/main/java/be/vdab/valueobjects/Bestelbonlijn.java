@@ -12,12 +12,11 @@ import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotBlank;
-
 import be.vdab.entities.Bier;
 
 @Embeddable
 // TODO int -> Integer allows @NotNull; should implement custom error messages now can't parseto Int
+// java.lang.NumberFormatException
 public class Bestelbonlijn implements Serializable {
 	private static final long serialVersionUID = 1L;
 

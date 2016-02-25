@@ -1,7 +1,6 @@
 package be.vdab.web;
 
 import javax.servlet.Filter;
-import javax.servlet.ServletRegistration.Dynamic;
 
 import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 import org.springframework.web.context.WebApplicationContext;
@@ -36,10 +35,6 @@ public class Initializer extends AbstractAnnotationConfigDispatcherServletInitia
 		return new Filter[] { new OpenEntityManagerInViewFilter(), utf8Filter };
 	}
 	
-	@Override
-	protected void customizeRegistration(Dynamic registration) {
-		registration.setInitParameter("dispatchOptionsRequest", "true");
-	}
 	@Override
     protected DispatcherServlet createDispatcherServlet(WebApplicationContext servletAppContext) {
         DispatcherServlet ds = new DispatcherServlet(servletAppContext);

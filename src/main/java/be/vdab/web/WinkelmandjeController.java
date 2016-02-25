@@ -32,11 +32,15 @@ public class WinkelmandjeController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	ModelAndView get() {
-		Bestelbon bestelbon = bestelbonService.read(winkelmandje.getBestelbonId());
+	ModelAndView get(WinkelmandjeForm otherForm) {
+		Bestelbon bestelbon = bestelbonService.read(winkelmandje.getBestelbonId());		
 		WinkelmandjeForm winkelmandjeForm = new WinkelmandjeForm();
+		if(otherForm.isActive()) {
+			winkelmandjeForm = otherForm;
+		}
 		ModelAndView modelAndView = new ModelAndView(WINKELMANDJE_VIEW);
 		if (bestelbon != null){
+			winkelmandjeForm.setStatus(true);
 			winkelmandjeForm.setBestelbonlijnen(bestelbon.getBestelbonlijnen());
 			modelAndView.addObject("bestelbon", bestelbon).addObject("winkelmandjeForm", winkelmandjeForm);
 		}
@@ -44,7 +48,7 @@ public class WinkelmandjeController {
 	}
 	
 	//TODO rethink code + rewrite
-	ModelAndView get(WinkelmandjeForm otherForm) {
+	/*ModelAndView get(WinkelmandjeForm otherForm) {
 		Bestelbon bestelbon = bestelbonService.read(winkelmandje.getBestelbonId());
 		WinkelmandjeForm winkelmandjeForm = otherForm;
 		ModelAndView modelAndView = new ModelAndView(WINKELMANDJE_VIEW);
@@ -53,11 +57,12 @@ public class WinkelmandjeController {
 			modelAndView.addObject("bestelbon", bestelbon).addObject("winkelmandjeForm", winkelmandjeForm);
 		}
 		return modelAndView;
-	}
+	}*/
 	
 	@RequestMapping(method = RequestMethod.POST)
 	ModelAndView post(@Valid WinkelmandjeForm winkelmandjeForm, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
+			winkelmandjeForm.changeStatus();
 			return get(winkelmandjeForm);
 		}
 		Bestelbon bestelbon = bestelbonService.read(winkelmandje.getBestelbonId());

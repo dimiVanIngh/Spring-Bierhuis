@@ -12,7 +12,7 @@
 <body>
 	<v:menu />
 	<c:choose>
-		<c:when test="${not empty winkelmandjeForm}">
+		<c:when test="${winkelmandjeForm.active}">
 			<h2>Winkelwagen</h2>
 			<table>
 				<thead>

@@ -24,6 +24,19 @@ public class WinkelmandjeForm {
 	@Length(min = 1, max = 50)
 	private String naam;
 	
+	private boolean active = false;
+	
+	public void changeStatus(){
+		active = !this.active;
+	}
+	
+	public boolean isActive(){
+		return active;
+	}
+	
+	public void setStatus(boolean status){
+		this.active = status;
+	}
 	public WinkelmandjeForm(){
 		
 	}

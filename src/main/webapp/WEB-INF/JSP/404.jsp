@@ -9,7 +9,7 @@
 <body>
 	<v:menu />
 	<h1>Fout</h1>
-	<p>De gevraagde resource is niet beschikbaar</p>
+	<p>De gevraagde resource werd niet gevonden</p>
 	<img alt='fout' src='<c:url value="/images/404.png"/>'>
 </body>
 </html>
