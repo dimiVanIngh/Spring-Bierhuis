@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
@@ -39,6 +40,7 @@ public class Bestelbon implements Serializable{
 	@NotBlank
 	@Length(min = 1, max = 50)
 	private String naam;
+	
 	@ElementCollection
 	@CollectionTable(name = "bestelbonlijnen", joinColumns = @JoinColumn(name = "bestelbonid") )
 	private Set<Bestelbonlijn> bestelbonlijnen = new HashSet<Bestelbonlijn>();
@@ -94,8 +96,21 @@ public class Bestelbon implements Serializable{
 		this.naam = naam;
 	}
 
+	// meerdere mensen toegang, synchronized; werkt met session stuff, uniek iedereen dus moet nu niet
 	public void addBestelLijn(Bestelbonlijn bestelbonlijn) {
+		// set auto keeps 1st value; this is needed to save second value
+		if(bestelbonlijnen.contains(bestelbonlijn)){
+			bestelbonlijnen.remove(bestelbonlijn);
+		}
 		bestelbonlijnen.add(bestelbonlijn);
+	}
+	
+	//TODO zou eigenlijk map moeten gebruiken, this is kinda cheating
+	public Bestelbonlijn getBestelbonlijn(Bier bier){
+		if(bestelbonlijnen.contains(new Bestelbonlijn(bier))){
+			return bestelbonlijnen.stream().filter(o -> o.equals(new Bestelbonlijn(bier))).collect(Collectors.toList()).iterator().next();
+		}
+		return null;
 	}
 
 	public BigDecimal getTotalePrijs() {

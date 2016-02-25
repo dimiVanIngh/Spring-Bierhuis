@@ -10,6 +10,5 @@
 	<v:menu />
 	<h1>Fout</h1>
 	<p>Een onvoorziene fout is opgetreden. We lossen dit zo snel mogelijk op</p>
-	<img alt='fout' src='<c:url value="/images/fout.jpg"/>'>
 </body>
 </html>

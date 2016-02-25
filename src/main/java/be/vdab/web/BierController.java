@@ -36,15 +36,22 @@ public class BierController {
 	
 	@RequestMapping(path = "{bier}", method = RequestMethod.GET)
 	ModelAndView read(@PathVariable Bier bier) {
-		return new ModelAndView(BIEREN_DETAIL_VIEW).addObject(new Bestelbonlijn(bier));
+		ModelAndView modelAndView = new ModelAndView(BIEREN_DETAIL_VIEW);
+		Bestelbon bon = bestelbonService.read(winkelmandje.getBestelbonId());
+		Bestelbonlijn lijn = new Bestelbonlijn(bier);
+		if(bon != null){
+			if(bon.getBestelbonlijn(bier) != null){
+				lijn = bon.getBestelbonlijn(bier);				
+			}
+		} 
+		return modelAndView.addObject(lijn);
 	}
 	
 	@RequestMapping(path = "{bier}", method = RequestMethod.POST)
 	String post(@PathVariable Bier bier, @Valid Bestelbonlijn bestelbonlijn,BindingResult bindingResult) {
 		if (bindingResult.hasErrors() || bier == null) {
 			return BIEREN_DETAIL_VIEW;
-		}
-		//TODO placeholder adres, create needs valid adres
+		}		
 		if(winkelmandje.getBestelbonId() == 0){
 			Bestelbon bon = new Bestelbon("placeholder",new Adres("placeholder","61",3010,"Leuven"));
 			bon.addBestelLijn(bestelbonlijn);
