@@ -97,7 +97,7 @@ public class Bestelbon implements Serializable{
 	}
 
 	// meerdere mensen toegang, synchronized; werkt met session stuff, uniek iedereen dus moet nu niet
-	public void addBestelLijn(Bestelbonlijn bestelbonlijn) {
+	public synchronized void addBestelLijn(Bestelbonlijn bestelbonlijn) {
 		// set auto keeps 1st value; this is needed to save second value
 		if(bestelbonlijnen.contains(bestelbonlijn)){
 			bestelbonlijnen.remove(bestelbonlijn);

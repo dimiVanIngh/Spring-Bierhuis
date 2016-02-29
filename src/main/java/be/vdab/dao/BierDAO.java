@@ -8,6 +8,5 @@ import be.vdab.entities.Bier;
 import be.vdab.entities.Brouwer;
 
 public interface BierDAO extends JpaRepository<Bier, Long> {
-	// kijken java classes niet db
 	List<Bier> findByBrouwer(Brouwer brouwer);
 }

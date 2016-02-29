@@ -79,5 +79,4 @@ public class Bestelbonlijn implements Serializable {
 			return false;
 		return true;
 	}
-
 }

@@ -25,21 +25,13 @@ public class CreateDataSourceBean {
 	@Bean
 	DataSource dataSource() {
 		HikariDataSource dataSource = new HikariDataSource();
-		
 		if (environment.containsProperty("OPENSHIFT_MYSQL_DB_HOST")) { 
 		  // uitvoering op OpenShift
 			  dataSource.setJdbcUrl("jdbc:mysql://" 
 					  + environment.getProperty("OPENSHIFT_MYSQL_DB_HOST") + ':'
 					  + environment.getProperty("OPENSHIFT_MYSQL_DB_PORT") + '/' 
-					  + environment.getProperty("openshift.database")
+					  + environment.getProperty("OPENSHIFT_APP_NAME")
 					  + "?useSSL=false");
-			/*StringBuilder builder = new StringBuilder();
-			builder.append("jdbc:mysql://");
-			builder.append(environment.getProperty("OPENSHIFT_MYSQL_DB_HOST") + ':');
-			builder.append(environment.getProperty("OPENSHIFT_MYSQL_DB_PORT") + '/');
-			builder.append(environment.getProperty("openshift.database"));
-			builder.append("?useSSL=false");
-		  dataSource.setJdbcUrl(builder.toString());*/
 		  dataSource.setDriverClassName(environment.getProperty("openshift.driverClassName"));
 		  dataSource.setUsername(environment.getProperty("OPENSHIFT_MYSQL_DB_USERNAME"));
 		  dataSource.setPassword(environment.getProperty("OPENSHIFT_MYSQL_DB_PASSWORD"));
@@ -51,6 +43,5 @@ public class CreateDataSourceBean {
 		  dataSource.setPassword(environment.getProperty("local.password"));
 		} 
 		return dataSource;
-
 	}
 }

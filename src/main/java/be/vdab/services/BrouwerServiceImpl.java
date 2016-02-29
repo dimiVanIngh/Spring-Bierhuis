@@ -29,5 +29,4 @@ public class BrouwerServiceImpl implements BrouwerService {
 	public Brouwer read(long id) {
 		return brouwerDAO.findOne(id);
 	}
-
 }

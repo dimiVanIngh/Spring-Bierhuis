@@ -8,6 +8,5 @@ public interface BrouwerService {
 
 	List<Brouwer> readAll();
 
-	Brouwer read(long id);
-	
+	Brouwer read(long id);	
 }

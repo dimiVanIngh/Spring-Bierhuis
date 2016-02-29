@@ -48,17 +48,6 @@ public class CreateControllerBeans extends WebMvcConfigurerAdapter {
 	}
 
 	@Bean
-	LocaleResolver localeResolver() {
-		// Session
-		return new SessionLocaleResolver();
-		// Cookie
-		/*
-		 * CookieLocaleResolver resolver = new CookieLocaleResolver();
-		 * resolver.setCookieMaxAge(604800); return resolver;
-		 */
-	}
-
-	@Bean
 	LocalValidatorFactoryBean validatorFactory() {
 		LocalValidatorFactoryBean factory = new LocalValidatorFactoryBean();
 		factory.setValidationMessageSource(messageSource());

@@ -46,19 +46,7 @@ public class WinkelmandjeController {
 		}
 		return modelAndView;
 	}
-	
-	//TODO rethink code + rewrite
-	/*ModelAndView get(WinkelmandjeForm otherForm) {
-		Bestelbon bestelbon = bestelbonService.read(winkelmandje.getBestelbonId());
-		WinkelmandjeForm winkelmandjeForm = otherForm;
-		ModelAndView modelAndView = new ModelAndView(WINKELMANDJE_VIEW);
-		if (bestelbon != null){
-			winkelmandjeForm.setBestelbonlijnen(bestelbon.getBestelbonlijnen());
-			modelAndView.addObject("bestelbon", bestelbon).addObject("winkelmandjeForm", winkelmandjeForm);
-		}
-		return modelAndView;
-	}*/
-	
+		
 	@RequestMapping(method = RequestMethod.POST)
 	ModelAndView post(@Valid WinkelmandjeForm winkelmandjeForm, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {

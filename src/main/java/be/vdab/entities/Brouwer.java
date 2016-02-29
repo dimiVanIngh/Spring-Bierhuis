@@ -103,6 +103,4 @@ public class Brouwer implements Serializable {
 	public void setBieren(Set<Bier> bieren) {
 		this.bieren = bieren;
 	}
-	
-
 }
